@@ -1,0 +1,93 @@
+{%  extends 'base.html' %}
+{% load static %}
+
+{% block head-extra %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+   <style>
+.center {
+  margin: auto;
+  width: 60%;
+}
+   </style>
+{% endblock %}
+
+{% block content %}
+ <!-- bradcam_area  -->
+  <div class="bradcam_area bradcam_bg_1">
+    <div class="container">
+      <div class="row">
+          <div class="col-xl-12">
+              <div class="bradcam_text">
+                  <h3>My Favourite Recipes</h3>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <!-- /bradcam_area  -->
+
+
+<!-- portfolio_image_area  -->
+<div class="portfolio_image_area">
+    <div class="container">
+
+        <div class="row">
+        {% for recipe in page_obj %}
+            <div class="col-lg-4 col-md-6 col-lg-4">
+                <div class="single_Portfolio wow fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">
+                    <div class="portfolio_thumb">
+                        <img src="{{ recipe.image.url }}" class="img-fluid" width="250"/>
+                    </div>
+                    <div class="portfolio_hover">
+                        <div class="title">
+                            <span>Recipe</span>
+                                <h3>{{ recipe.title }}</h3>
+                                <a class="boxed-btn3" href="{% url 'detail' recipe.id %}">View</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="container">
+                <div class="center">
+                <ul class="pagination">
+
+                {% if page_obj.has_previous %}
+                    <li><a href="?page=1">&laquo; first</a></li>
+                    <li><a href="?page={{ page_obj.previous_page_number }}">previous</a></li>
+                {% endif %}
+
+                {% for i in  page_obj.paginator%}
+                    {% if forloop.counter == page_obj.number %}
+                        <li class="active"><a href="?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
+                    {% else %}
+                        <li><a href="?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
+                    {% endif %}
+
+                {% endfor %}
+
+
+                {% if page_obj.has_next %}
+                    <li><a href="?page={{ page_obj.next_page_number }}">next</a></li>
+                    <li><a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a></li>
+                {% endif %}
+                </ul>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+
+{% endblock %}

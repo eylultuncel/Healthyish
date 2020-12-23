@@ -1,0 +1,62 @@
+{%  extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- bradcam_area  -->
+<div class="bradcam_area bradcam_bg_1">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="bradcam_text text-center">
+                    <h3>Sign Up!</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /bradcam_area  -->
+
+<body>
+
+<br>
+<br>
+<br>
+{% if error %}
+    <br>
+    {{ error }}
+    <br>
+{% endif  %}
+
+
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
+        <body class="text-center">
+            <form class="form" method="POST" action="{% url 'signup' %}" >
+            {% csrf_token %}
+                <h1 class="h3 mb-3 font-weight-normal"> Please sign up!</h1>
+                  <br><label for="username" class="sr-only">User Name</label>
+                  <input type="text" name="username" class="form-control" placeholder="Name" required>
+                        <label for="email" class="sr-only">Email</label>
+                  <input type="text" name="email" class="form-control" placeholder="Email" required>
+                        <label for="password1" class="sr-only">Password</label>
+                  <input type="password" name="password1" class="form-control" placeholder="Password" required>
+                        <label for="password2" class="sr-only">Password</label>
+                  <input type="password" name="password2" class="form-control" placeholder="Confirm Password" required>
+
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up!</button>
+            </form>
+        </body>
+    </div>
+        <div class="col-3"></div>
+
+  </div>
+
+
+<br><br><br>
+ {% include 'footer.html' %}
+
+
+</body>
+
+{% endblock %}

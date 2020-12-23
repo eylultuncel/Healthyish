@@ -1,0 +1,61 @@
+{%  extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- bradcam_area  -->
+<div class="bradcam_area bradcam_bg_1">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="bradcam_text text-center">
+                    <h3>Profile Settings</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /bradcam_area  -->
+
+<body>
+
+<br>
+<br>
+<br>
+{% if error %}
+    <br>
+    {{ error }}
+    <br>
+{% endif  %}
+
+
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
+        <body class="text-center">
+            <form class="form" method="POST" action="{% url 'settings' %}" >
+            {% csrf_token %}
+                  <br>Username:<label for="username" class="sr-only"></label>
+                  <input type="text" name="username" class="form-control" placeholder="{{ user.username }}" ><br>
+                        Email:<label for="email" class="sr-only">Email</label>
+                  <input type="text" name="email" class="form-control" placeholder="{{ user.email }}" ><br>
+                        Password:<label for="password1" class="sr-only">Password</label>
+                  <input type="password" name="password1" class="form-control" placeholder="********" ><br>
+                        Confirm Password:<label for="password2" class="sr-only">Password</label>
+                  <input type="password" name="password2" class="form-control" placeholder="********" ><br>
+
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Save!</button>
+            </form>
+        </body>
+    </div>
+        <div class="col-3"></div>
+
+  </div>
+
+
+<br><br><br>
+ {% include 'footer.html' %}
+
+
+</body>
+
+{% endblock %}

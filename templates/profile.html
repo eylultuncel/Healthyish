@@ -1,0 +1,311 @@
+{%  extends 'base.html' %}
+{% load static %}
+
+{% block head-extra %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+{% endblock %}
+
+
+{% block content %}
+<!-- bradcam_area  -->
+<div class="bradcam_area breadcam_bg_3" >
+<div class="container">
+  <div class="row">
+      <div class="col-xl-12">
+          <div class="bradcam_text">
+              <h3>Hi {{ user }}, Your Daily Foods and Exercises</h3>
+          </div>
+      </div>
+  </div>
+</div>
+</div>
+<!-- /bradcam_area  -->
+
+    <!-- service_area  -->
+    <div class="service_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6 col-md-6">
+                                <a href="{% url 'bmi' %}"/>
+
+                    <div class="single_service text-center wow fadeInLeft" data-wow-duration="1.2s" data-wow-delay=".4s">
+                        <div class="icon">
+                            <img src="{% static 'img/svg_icon/1.svg' %}" alt="">
+                        </div>
+                        <h3>Body Mass Index</h3>
+                        <h4 style="font-size: 30px" >{{ bmi }}</h4>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-6">
+                                <a href="{% url 'dailycalorie' %}"/>
+
+                    <div class="single_service text-center wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">
+                        <div class="icon">
+                            <img src="{% static 'img/svg_icon/2.svg' %}" alt="">
+                        </div>
+                        <h3>Daily Calorie</h3>
+                        <h4 style="font-size: 30px" >{{ daily_calorie }} calorie</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row"> <a href=""></a> </div>
+        </div>
+    </div>
+    <!--/ service_area  -->
+
+
+<div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+
+
+{% if foods %}
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Food</th>
+      <th scope="col">Calorie</th>
+      <th scope="col">Carbohydrate</th>
+      <th scope="col">Protein</th>
+      <th scope="col">Fat</th>
+      <th scope="col">Portion</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for food in foods %}
+    <tr>
+      <th scope="row">{{ food.eatenfood.name }}</th>
+      <td>{{ food.calorie }} calorie</td>
+      <td>{{ food.carbohydrate }} gr.</td>
+      <td>{{ food.protein }} gr.</td>
+      <td>{{ food.fats }} gr.</td>
+      <td>{{ food.portion }}</td>
+      <td>
+          <a type="button" class="boxed-btn3 wow fadeInLeft"  data-id="{{food.id}}" data-toggle="modal" data-target="#modal-default{{food.id}}" data-wow-duration="1s" data-wow-delay=".2s" ><span class="oi oi-caret-top"></span>Delete</a>
+      </td>
+
+
+      <div id="modal-default{{food.id}}" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+              <div class="modal-body">
+                <p>Are you sure you want to delete  "{{ food.eatenfood.name }}"?</p>
+              </div>
+              <div class="modal-footer">
+                  <a type="button" class="btn btn-default" href="{% url 'delete' food.id %}" >Yes, Delete!</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {% endfor %}
+    </tr>
+  <tr>
+      <th scope="col"><h3 style="color: darkviolet">TOTAL</h3></th>
+      <th scope="col"><h3 style="color: darkviolet" id="cal"></h3></th>
+      <th scope="col"><h3 style="color: darkviolet">{{ total_carb }} gr.</h3></th>
+      <th scope="col"><h3 style="color: darkviolet">{{ total_protein }} gr.</h3></th>
+      <th scope="col"><h3 style="color: darkviolet">{{ total_fat }} gr.</h3></th>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+    <br>
+
+{% else %}
+    <body class="text-center">
+    No food eaten today.<br><br>
+    </body>
+
+{% endif  %}
+
+
+<body class="text-center"><br>
+<a class="boxed-btn3 wow fadeInLeft"  data-wow-duration="1s" data-wow-delay=".2s" href="{% url 'foods' %}">Add New Food!</a>
+</body>
+        <br>
+        <br>
+        <hr>
+        <br>
+        <br>
+
+
+  {% if exercises_done %}
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Exercise</th>
+      <th scope="col">Calorie</th>
+      <th scope="col">Duration</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for exercise in exercises_done %}
+    <tr>
+      <th scope="row">{{ exercise.exercise.name }}</th>
+      <td>{{ exercise.calorie}} calorie</td>
+      <td>{{ exercise.duration }} min.</td>
+      <td>
+
+          <a type="button" class="boxed-btn3 wow fadeInLeft"  data-id="{{exercise.id}}" data-toggle="modal" data-target="#modal-default{{exercise.id}}" data-wow-duration="1s" data-wow-delay=".2s" ><span class="oi oi-caret-top"></span>Delete</a>
+      </td>
+
+      <div id="modal-default{{exercise.id}}" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+              <div class="modal-body">
+                <p>Are you sure you want to delete  "{{ exercise.exercise.name }}"?</p>
+              </div>
+              <div class="modal-footer">
+                  <a type="button" class="btn btn-default" href="{% url 'delete_exercise' exercise.id %}" >Yes, Delete!</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+
+
+        {% endfor %}
+    </tr>
+  <tr>
+      <th scope="row"><h3 style="color: darkviolet">TOTAL</h3></th>
+      <td><h3 style="color: blueviolet">{{ total_exercise_cal }} calorie</h3></td>
+      <td><h3 style="color: blueviolet">{{ total_duration }} min.</h3></td>
+      <td>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+{% else %}
+    <body class="text-center">
+    No exercises done today.<br><br>
+    </body>
+
+{% endif  %}
+
+        <body class="text-center"><br>
+<a class="boxed-btn3 wow fadeInLeft"  data-wow-duration="1s" data-wow-delay=".2s" href="{% url 'exercises' %}">Add New Exercise!</a>
+</body>
+        <br>
+        <br>
+        <hr>
+        <br>
+        <br>
+
+
+<tr>
+    <table class="table">
+        <thead class="thead-dark">
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">Calorie</th>
+    </tr>
+  </thead>
+  <thead class="thead-light">
+  <tr>
+      <th scope="col">Foods </th>
+      <th scope="col" id="total_cal"></th>
+  </tr>
+  <tr>
+      <th scope="col">Exercises </th>
+      <th scope="col">- {{ total_exercise_cal }} calorie</th>
+  </tr>
+  <tr>
+      <th scope="col"><h3 style="color: blueviolet">TOTAL</h3>  </th>
+      <th scope="col"><h3 id="total" style="color: blueviolet"></h3> </th>
+  </tr>
+  </thead>
+    </table>
+    </tr>
+
+
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4">
+                <div id="piechart" ></div>
+            </div>
+            <div class="col-4"></div>
+
+        </div>
+
+    </div>
+    </div>
+
+</div>
+
+
+<br>
+<br>
+<br>
+{% endblock %}
+
+{% block js-foot %}
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script type="text/javascript">
+    // Load google charts
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    // Draw the chart and set the chart values
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+      ['Nutrition', 'Mg. per Day'],
+      ['Carbohydrate', {{ total_carb }}],
+      ['Fat', {{ total_fat }}],
+      ['Protein', {{ total_protein }}],
+    ]);
+
+
+      // Optional; add a title and set the width and height of the chart
+      var options = {'title':'Todays Nutritions', 'width':650, 'height':500};
+
+      // Display the chart inside the <div> element with id="piechart"
+      var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+      chart.draw(data, options);
+    }
+    </script>
+
+    <script>
+        var f = {{ total_calorie }};
+        var n = f.toFixed(2);
+        var e = {{ total_exercise_cal }};
+        var total = n - e;
+        document.getElementById("total").innerHTML = total + " calorie";
+    </script>
+
+    <script>
+      var num = {{ total_calorie }};
+      var n = num.toFixed(2);
+      document.getElementById("cal").innerHTML = n + " calorie";
+    </script>
+
+    <script>
+      var num = {{ total_calorie }};
+      var n = num.toFixed(2);
+      document.getElementById("total_cal").innerHTML = "+ " + n + " calorie";
+    </script>
+
+
+
+
+{% endblock %}

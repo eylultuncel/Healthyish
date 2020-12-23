@@ -1,0 +1,139 @@
+{%  extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block head-extra %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+{% endblock %}
+
+
+{% block content %}
+<!-- bradcam_area  -->
+<div class="bradcam_area breadcam_bg_3">
+<div class="container">
+  <div class="row">
+      <div class="col-xl-12">
+          <div class="bradcam_text">
+              <h3>Foods</h3>
+          </div>
+      </div>
+  </div>
+</div>
+</div>
+<!-- /bradcam_area  -->
+
+<body>
+
+
+{% if user.is_authenticated %}
+<br><br>
+
+<body class="text-center">
+Please enter what you eat today!<br><br>
+</body>
+
+<form action="{% url 'foods' %}"  method="post"  id="food_form">
+    {% csrf_token %}
+
+        Food :
+        <br>
+        <label for="foods"></label>
+         <select name="foods" id="foods" form="food_form" class="js-example-basic-single" style="width: 800px;height: 150px">
+          {% for food in all_foods %}
+               <option value="{{ food }}">{{ food }}--{{ food.measure }}</option>
+          {% endfor %}
+        </select>
+
+        <br><br>
+        Portion :
+        <br>
+        <label for="portion">
+            <select name="portion" id="portion" form="food_form" class="js-example-basic-single" style="width: 400px;height: 150px">
+                <option >0.1</option>
+                <option >0.25</option>
+                <option >0.5</option>
+                <option >0.75</option>
+                <option selected>1</option>
+                <option >1.5</option>
+                <option >2</option>
+                <option >3</option>
+                <option >4</option>
+                <option >5</option>
+            </select>
+        </label>
+
+        <br><br>
+    <input type="submit" value="Add Food!" class="boxed-btn3 wow fadeInLeft"  data-wow-duration="1s" data-wow-delay=".2s"></form>
+</form>
+
+
+
+{% if eaten_foods %}
+<br>
+<br>
+
+<div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+
+    <body clas="text-center">
+    <hr size="5" width="90%" color="darkgreen">
+    <br><h3>What have you been eating today?</h3>
+
+    <table class="table" >
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">Food</th>
+      <th scope="col">Calorie</th>
+      <th scope="col">Portion</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    {% for food in eaten_foods  %}
+    <tr>
+      <th scope="row">{{ food.eatenfood.name }}</th>
+      <td>{{ food.eatenfood.calorie }} calorie</td>
+      <td>{{ food.portion }} portion</td>
+    </tr>
+        </tbody>
+    {% endfor %}
+    </table>
+    </body>
+
+        </div>
+        </div>
+{% endif  %}
+
+
+
+    {% else %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <body class="text-center">
+    <h3>For using this function please sign up first!</h3><br>
+    <a class="boxed-btn3 wow fadeInLeft"  data-wow-duration="1s" data-wow-delay=".2s" href="{% url 'signup' %}">Sign Up!</a><br>
+    </body>
+
+{% endif %}
+
+<br>
+<br>
+<br>
+{% endblock %}
+
+
+
+{% block js-foot %}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+    $('.js-example-basic-single').select2();
+});
+</script>
+{% endblock %}

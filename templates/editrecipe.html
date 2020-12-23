@@ -1,0 +1,98 @@
+{%  extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- bradcam_area  -->
+<div class="bradcam_area bradcam_bg_1">
+<div class="container">
+  <div class="row">
+      <div class="col-xl-12">
+          <div class="bradcam_text">
+              <h3>Add Recipe!</h3>
+          </div>
+      </div>
+  </div>
+</div>
+</div>
+<!-- /bradcam_area  -->
+
+
+
+
+
+{% if user.is_authenticated %}
+<br>
+<br>
+<br>
+{% if error %}
+    <br>
+    {{ error }}
+    <br>
+{% endif  %}
+
+<body class=" text-center">
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <form method="POST" action="{% url 'editrecipe' recipe.id %}" enctype="multipart/form-data">
+
+                {% csrf_token %}
+                <h4>Title:</h4>
+                <br>
+                <textarea name="title" rows="1" cols="50" placeholder="Recipe title">{{ recipe.title }}</textarea>
+                <br><br>
+                <h4>Text:</h4>
+                <br>
+                <textarea name='text' rows="10" cols="80" placeholder="Write your recipe here.">{{ recipe.text }}</textarea>
+                <br><br>
+                 <h4>Image:</h4>
+                <img src="{{ recipe.image.url }}" id="output" width="200">
+                <br>
+                <br>
+
+                <label for="image">Select image:</label>
+                <input type="file" id="image" name="image" accept="image/*" onchange="loadFile(event)">
+
+                <br>
+                <br>
+                <input style="width: 400px;background-color: darkred;border-color: darkred " class="btn btn-primary" type="submit" value="Save!">
+
+            </form>
+                <div class="col-3"></div>
+        </div>
+      </div>
+</body>
+
+{% else %}
+
+     <br>
+    <br>
+    <br>
+    <br>
+    <body class="text-center">
+    <h3>For using this function please sign up first!</h3><br>
+    <a class="boxed-btn3 wow fadeInLeft"  data-wow-duration="1s" data-wow-delay=".2s" href="{% url 'signup' %}">Sign Up!</a><br>
+    </body>
+
+{% endif %}
+
+
+
+<br>
+<br>
+<br>
+<br>
+
+{% endblock %}
+
+{% block js-foot %}
+<script>
+  var loadFile = function(event) {
+    var output = document.getElementById('output');
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function() {
+      URL.revokeObjectURL(output.src) // free memory
+    }
+  };
+</script>
+{% endblock %}

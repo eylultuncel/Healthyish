@@ -1,0 +1,74 @@
+{%  extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- bradcam_area  -->
+<div class="bradcam_area breadcam_bg_3">
+<div class="container">
+  <div class="row">
+      <div class="col-xl-12">
+          <div class="bradcam_text">
+              <h3>What is Daily Calorie?</h3>
+          </div>
+      </div>
+  </div>
+</div>
+</div>
+<!-- /bradcam_area  -->
+
+<div>
+<br>
+<br>
+<br>
+<br>
+
+
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+                    <body class="text-align-left">
+
+<h1 style="color:darkolivegreen;font-size:40px;">What should my daily intake of calories be?</h1><br>
+<p style="color:gray;font-size:25px;" >An ideal daily intake of calories varies depending on age, metabolism and levels of physical activity, among other things.
+Generally, the recommended daily calorie intake is 2,000 calories a day for women and 2,500 for men.<br>
+</p>
+
+<br>
+<h2 style="color:darkolivegreen;font-size:35px;" >What are calories?</h2><br>
+<p style="color:gray;font-size:25px;" >Calories are a measure of how much energy food or drink contains. The amount of energy you need will depend on:<br><br>
+    ~ your age : for example, growing children and teenagers may need more energy<br>
+    ~ your lifestyle : for example, how active you are<br>
+    ~ your size : your height and weight can affect how quickly you use energy<br><br>
+Other factors can also affect how much energy you burn. For example:<br><br>
+
+    ~ some hormones (chemicals produced by the body) : such as thyroid hormones<br>
+    ~ some medicines : such as glucocorticoids, a type of steroid used to treat inflammation<br>
+    ~ being unwell
+<br><br>
+<h2 style="color:darkolivegreen;font-size:35px;" >Calories and kilocalories</h2><br>
+<p style="color:gray;font-size:25px;" >The term calorie is commonly used as shorthand for kilocalorie. You will find this written as kcal on food packets. Kilojoules (kJ) are the equivalent of kilocalories within the International System of Units, and you'll see both kJ and kcal on nutrition labels. 4.2kJ is equivalent to approximately 1kcal.
+</p>
+<br>
+<h2 style="color:darkolivegreen;font-size:35px;" >Maintaining a healthy weight</h2><br>
+<p style="color:gray;font-size:25px;" >
+    <a href="{% url 'calculatebmi' %}">To find out if you are a healthy weight, use the BMI calculator.</a><br>
+
+To maintain a healthy weight, you need to balance the amount of calories you consume through food and drink with the amount of calories you burn through physical activity.
+<br><br>
+
+
+
+            </body>
+    </div>
+</div>
+</div>
+
+
+<br>
+<br>
+<br>
+<br>
+
+{%  endblock %}

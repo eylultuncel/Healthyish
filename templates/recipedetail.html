@@ -1,0 +1,219 @@
+{%  extends 'base.html' %}
+{% load static %}
+
+{% block head-extra %}
+    <link href="{% static 'open-iconic/font/css/open-iconic-bootstrap.css' %}" rel="stylesheet">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  background-color: white;
+  color: black;
+}
+
+.dark-mode {
+  background-color: black;
+  color: white;
+}
+</style>
+
+    <style>
+* {
+  box-sizing: border-box;
+}
+
+.zoom {
+  background-color: white;
+  transition: transform .2s;
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
+}
+
+.zoom:hover {
+  -ms-transform: scale(1.5); /* IE 9 */
+  -webkit-transform: scale(1.5); /* Safari 3-8 */
+  transform: scale(1.5);
+}
+</style>
+
+{% endblock %}
+
+{% block content %}
+<!-- bradcam_area  -->
+<div class="bradcam_area bradcam_bg_1">
+<div class="container">
+  <div class="row">
+      <div class="col-xl-12">
+          <div class="bradcam_text">
+              <h3>{{ recipe.title }}</h3>
+          </div>
+      </div>
+  </div>
+</div>
+</div>
+<!-- /bradcam_area  -->
+
+<br>
+<br>
+<br>
+<br>
+
+
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-3"></div>
+
+        <div class="col-4">
+            <h1 style="font-style: initial;color: black" >{{ recipe.title }}</h1>
+        <hr>
+
+            {% if user.is_authenticated %}
+                {% if is_liked %}
+                    <button id="unlike_button" class="btn btn-primary btn-lg btn-block" style="background: darkred;border-color: darkred; width: 150px; display: block" ><span class="oi oi-thumb-down"> Unlike</span></button>
+                    <button id="like_button" class="btn btn-primary btn-lg btn-block" style="background: darkred;border-color: darkred; width: 150px; display: none" ><span class="oi oi-thumb-up"> Like!</span></button>
+                {% else %}
+                    <button id="like_button" class="btn btn-primary btn-lg btn-block" style="background: darkred;border-color: darkred; width: 150px; display: block" ><span class="oi oi-thumb-up"> Like!</span></button>
+                    <button id="unlike_button" class="btn btn-primary btn-lg btn-block" style="background: darkred;border-color: darkred; width: 150px; display: none" ><span class="oi oi-thumb-down"> Unlike</span></button>
+                {% endif %}
+            {% else %}
+                <a href="{% url 'signup' %}"><button class="btn btn-primary btn-lg btn-block" style="background: darkred;border-color:darkred; width: 150px" ><span class="oi oi-thumb-up"></span> Like!</button></a>
+            {% endif %}
+            <br>
+            <h5><span class="oi oi-heart"></span> <span id="recipe_likes">{{ recipe.likes }}</span> Likes!</h5>
+            <h5><span class="oi oi-clock"></span> {{ recipe.date_pretty }} </h5>
+            <h5><span class="oi oi-person"></span> Added by {{ recipe.user }} </h5>
+        </div>
+        <div class="zoom" class="col-2"> apt-get install git
+            <img src="{{ recipe.image.url }}" class="img-fluid" width="300"/>
+         </div>
+        <div class="col-3">
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-3"></div>
+
+        <div class="col-2 text-left">
+
+        </div>
+        <div class="col-7"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <p style="background-color: linen">{{ recipe.text|linebreaks }} </p>
+            <br><br><br>
+            <button class="btn btn-primary boxed-btn3 " onclick="myFunction()" id="changetext" style="width: 150px;background-color:gray;border-color: gray;color: whitesmoke;background-color: gray">Dark Mode</button>
+
+         </div>
+
+    </div>
+
+
+<form id="like" method="POST" action="{% url 'like' recipe.id %}">
+  {%  csrf_token %}
+    <input type="hidden">
+</form>
+
+<form id="unlike" method="POST" action="{% url 'unlike' recipe.id %}">
+  {%  csrf_token %}
+    <input type="hidden">
+</form>
+</div>
+
+    <br>
+    <br>
+    <br>
+    <hr>
+
+    <!-- portfolio_image_area  -->
+    <div class="portfolio_image_area">
+        <div class="container">
+            <h2>You could also like</h2>
+
+            <div class="row">
+            {% for recipe1 in recommendations %}
+
+                <div class="col-lg-4 col-md-6 col-lg-4"  onclick="window.location='{% url 'detail' recipe1.id %}';" style="cursor:pointer ">
+                    <div class="single_Portfolio wow fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">
+                        <div class="portfolio_thumb">
+                            <img src="{{ recipe1.image.url }}" class="img-fluid" width="250"/>
+                        </div>
+                        <div class="portfolio_hover">
+                            <div class="title">
+                                <span>Recipe</span>
+                                    <h3>{{ recipe1.title }}</h3>
+                                    <a class="boxed-btn3" href="{% url 'detail' recipe1.id %}">View</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
+            </div>
+        </div>
+
+<br>
+<br>
+<br>
+<br>
+</div>
+
+{% endblock %}
+
+
+{% block js-foot %}
+<script>
+$(document).ready(function(){
+    $('#like_button').click(function(){
+          $.ajax({
+            url: "{% url 'like' recipe.id %}",
+            dataType: 'json',
+            success: function (data) {
+              $('#recipe_likes').html(data.like),
+              $('#like_button').hide(),
+              $('#unlike_button').show()
+            }
+           });
+        });
+
+    $('#unlike_button').click(function(){
+          $.ajax({
+            url: "{% url 'unlike' recipe.id %}",
+            dataType: 'json',
+            success: function (data) {
+              $('#recipe_likes').html(data.like),
+              $('#like_button').show(),
+              $('#unlike_button').hide()
+            }
+           });
+        })
+});
+</script>
+
+
+
+<script>
+function myFunction() {
+   var element = document.body;
+   element.classList.toggle("dark-mode");
+
+   var x = document.getElementById("changetext");
+  if (x.innerHTML === "Dark Mode") {
+    x.innerHTML = "Light Mode";
+  } else {
+    x.innerHTML = "Dark Mode";
+  }
+}
+</script>
+{% endblock %}

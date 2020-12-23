@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Healthyish</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <!-- CSS here -->
+
+    <link rel="stylesheet" href="{%  static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/nice-select.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/flaticon.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/gijgo.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/animate.min.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/slick.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/slicknav.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/style.css' %}">
+    {#<link rel="stylesheet" href="css/responsive.css">#}
+
+    {% block head-extra %} {% endblock %}
+
+</head>
+<body>
+    <header>
+        <div class="header-area ">
+            <div id="sticky-header" class="main-header-area">
+                <div class="container-fluid p-0">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col-xl-2 col-lg-2">
+                            <div class="logo-img">
+                                <a href="{% url 'home' %}">
+                                    <img src="{% static 'logo.png' %}" alt="" style="width:  120px">
+                                    <img src="{% static 'name.png' %}" alt="" style="width: 120px">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xl-10 col-lg-10">
+                            <div class="main-menu  d-none d-lg-block text-center">
+                                <nav>
+                                    <ul id="navigation">
+                                        <li><a class="active" href="{%  url 'home' %}">home</a></li>
+                                        <li><a href="{% url 'calculatebmi' %}">BMI <i class="ti-angle-down"></i></a>
+                                        <ul class="submenu">
+                                                <li><a href="{% url 'bmi' %}">What is BMI?</a></li>
+                                                <li><a href="{% url 'dailycalorie' %}">What is Daily Calorie?</a></li>
+                                                <li><a href="{% url 'calculatebmi' %}">Calculate!</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="{% url 'foods' %}">Foods</a></li>
+                                        <li><a href="{% url 'exercises' %}">Exercises</a></li>
+                                        <li><a href="{% url 'allrecipes' %}">Recipes <i class="ti-angle-down"></i></a>
+                                            <ul class="submenu">
+                                                <li><a href="{% url 'allrecipes' %}">All Recipes</a></li>
+                                                <li><a href="{% url 'addrecipe' %}">Add Recipe</a></li>
+                                                {% if user.is_authenticated %}
+                                                <li><a href="{% url 'addedrecipes' %}">Edit Recipes</a></li>
+                                                <li><a href="{% url 'favourite_recipes' %}">Favourite Recipes</a></li>
+                                                {% endif %}
+                                            </ul>
+                                        </li>
+                                        <li><a href=""></a></li>
+                                        <li><a href=""></a></li>
+                                        {% if user.is_authenticated %}
+                                            <li><a href="{% url 'profile' %}">Profile <i class="ti-angle-down"></i></a>
+                                            <ul class="submenu">
+                                                <li><a href="{% url 'profile' %}">Go Profile</a></li>
+                                                <li><a href="{% url 'settings' %}">Profile Settings</a></li>
+                                            </ul>
+                                            <li><a href="javascript:{document.getElementById('logout').submit()}">Logout</a></li>
+
+                                            <form id="logout" method="POST" action="{% url 'logout' %}" >
+                                                {% csrf_token %}
+                                                <input type="hidden"/>
+                                            </form>
+                                        {% else %}
+                                        <li><a href="{% url 'signup' %}" >Sign Up! </a></li>
+                                        <li><a href="{% url 'login' %}"  >Login!</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </header>
+    {% block content %}{% endblock %}
+    {%  include 'footer.html' %}
+
+    {% block js-foot %}{% endblock %}
+</body>
+</html>

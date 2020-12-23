@@ -1,0 +1,129 @@
+{%  extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block head-extra %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+
+{% endblock %}
+
+
+{%  block content %}
+<!-- bradcam_area  -->
+<div class="bradcam_area breadcam_bg_3">
+<div class="container">
+  <div class="row">
+      <div class="col-xl-12">
+          <div class="bradcam_text">
+              <h3>Exercises</h3>
+          </div>
+      </div>
+  </div>
+</div>
+</div>
+<!-- /bradcam_area  -->
+
+<body>
+
+{% if user.is_authenticated %}
+<br><br>
+
+<body class="text-center">
+Please enter the exercises you have done today!<br><br>
+</body>
+
+<form action="{% url 'exercises' %}"  method="post"  id="exercise_form">
+    {% csrf_token %}
+        Exercises :
+        <br>
+        <label for="exercises"></label>
+         <select name="exercises" id="exercises" form="exercise_form" class="js-example-basic-single" style="width: 800px;height: 150px">
+          {% for exercise in all_exercises %}
+               <option value="{{ exercise.name }}">{{ exercise.name }}</option>
+          {% endfor %}
+        </select>
+
+        <br><br>
+        Duration (in minutes) :
+        <br>
+        <label for="duration" >
+            <input type="number" id="duration" name="duration" min="1"  width="600" >
+        </label>
+
+        <br><br>
+<input type="submit" value="Add Exercise!" class="boxed-btn3 wow fadeInLeft"  data-wow-duration="1s" data-wow-delay=".2s"/>
+</form>
+
+
+
+{% if exercises_done %}
+<br>
+<br>
+
+<div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+
+    <body clas="text-center">
+    <hr size="5" width="90%" color="darkgreen">      <br><h3>What have you been done today?</h3>
+
+    <table class="table" >
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">Exercise</th>
+      <th scope="col">Calorie</th>
+      <th scope="col">Duration</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    {% for exercise in exercises_done  %}
+    <tr>
+      <th scope="row">{{ exercise.exercise.name }}</th>
+      <td>{{ exercise.calorie }} calorie</td>
+      <td>{{ exercise.duration }} min.</td>
+    </tr>
+        </tbody>
+    {% endfor %}
+    </table>
+    </body>
+
+        </div>
+        </div>
+{% endif  %}
+
+
+
+    {% else %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <body class="text-center">
+    <h3>For using this function please sign up first!</h3><br>
+    <a class="boxed-btn3 wow fadeInLeft"  data-wow-duration="1s" data-wow-delay=".2s" href="{% url 'signup' %}">Sign Up!</a><br>
+    </body>
+
+{% endif %}
+
+<br>
+<br>
+<br>
+{% endblock %}
+
+{% block js-foot %}
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+<script>
+
+    $(document).ready(function() {
+    $('.js-example-basic-single').select2();
+});
+
+
+</script>
+
+
+
+{% endblock %}

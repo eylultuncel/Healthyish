@@ -1,0 +1,56 @@
+{%  extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- bradcam_area  -->
+<div class="bradcam_area bradcam_bg_1">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="bradcam_text text-center">
+                    <h3>Login!</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /bradcam_area  -->
+
+<body>
+
+<br>
+<br>
+<br>
+{% if error %}
+    <br>
+    {{ error }}
+    <br>
+{% endif  %}
+
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
+        <body class="text-center">
+            <form class="form" method="POST" action="{% url 'login' %}" >
+            {% csrf_token %}
+                <h1 class="h3 mb-3 font-weight-normal"> Please Login</h1>
+                  <br><label for="username" class="sr-only">User Name</label>
+                  <input type="text" name="username" class="form-control" placeholder="Name" required>
+                <label for="password" class="sr-only">Password</label>
+                  <input type="password" name="password" class="form-control" placeholder="Password" required>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Login!</button>
+                <br>
+                <a href="{% url 'password_reset' %}" >Forgot your password? Click Here!</a>
+
+            </form>
+        </body>
+    </div>
+    <div class="col-3"></div>
+
+  </div>
+
+
+<br><br><br><br><br>
+
+
+{% endblock %}

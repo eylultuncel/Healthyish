@@ -1,0 +1,77 @@
+{%  extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+ <!-- bradcam_area  -->
+  <div class="bradcam_area breadcam_bg_3">
+    <div class="container">
+      <div class="row">
+          <div class="col-xl-12">
+              <div class="bradcam_text">
+                  <h3>What is Body Mass Index?</h3>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <!-- /bradcam_area  -->
+
+<div>
+
+<br>
+<br>
+<br>
+<br>
+
+
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+                    <body class="text-align-left">
+
+<h1 style="color:darkolivegreen;font-size:40px;">What is the body mass index (BMI)?</h1><br>
+<p style="color:gray;font-size:25px;" >The body mass index (BMI) is a measure that uses your height and weight to work out if your weight is healthy.
+
+The BMI calculation divides an adult's weight in kilograms by their height in metres squared. For example, A BMI of 25 means 25kg/m2.<br>
+</p>
+
+<br><br>
+<h2 style="color:darkolivegreen;font-size:35px;" >BMI ranges</h2><br>
+<p style="color:gray;font-size:25px;" >For most adults, an ideal BMI is in the 18.5 to 24.9 range.<br>
+
+For children and young people aged 2 to 18, the BMI calculation takes into account age and gender as well as height and weight.<br><br>
+
+If your BMI is:<br><br>
+
+below 18.5 – you're in the underweight range<br>
+between 18.5 and 24.9 – you're in the healthy weight range<br>
+between 25 and 29.9 – you're in the overweight range<br>
+between 30 and 39.9 – you're in the obese range<br><br>
+    <a href="{% url 'calculatebmi' %}">If you want to calculate your BMI, try our calculator.</a><br></p>
+
+<br><br>
+<h2 style="color:darkolivegreen;font-size:35px;" >Accuracy of BMI</h2><br>
+<p style="color:gray;font-size:25px;" > BMI takes into account natural variations in body shape, giving a healthy weight range for a particular height.
+
+As well as measuring your BMI, healthcare professionals may take other factors into account when assessing if you're a healthy weight.
+
+Muscle is much denser than fat, so very muscular people, such as heavyweight boxers, weight trainers and athletes, may be a healthy weight even though their BMI is classed as obese.
+
+Your ethnic group can also affect your risk of some health conditions. For example, adults of Asian origin may have a higher risk of health problems at BMI levels below 25.
+
+You should not use BMI as a measure if you're pregnant. Get advice from your midwife or GP if you're concerned about your weight.                    </body>
+       </p>
+
+ </div>
+        </div>
+        </div>
+
+
+<br>
+<br>
+<br>
+<br>
+
+{% endblock %}

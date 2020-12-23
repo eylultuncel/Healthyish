@@ -1,0 +1,99 @@
+{%  extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+
+{% block content %}
+ <!-- bradcam_area  -->
+  <div class="bradcam_area breadcam_bg_3">
+    <div class="container">
+      <div class="row">
+          <div class="col-xl-12">
+              <div class="bradcam_text">
+                  <h3>Calculate Body Mass Index!</h3>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <!-- /bradcam_area  -->
+
+<div>
+
+<br>
+{% if bmi %}
+
+    <!-- service_area  -->
+    <div class="service_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6 col-md-6">
+                                <a href="{% url 'bmi' %}"/>
+
+                    <div class="single_service text-center wow fadeInLeft" data-wow-duration="1.2s" data-wow-delay=".4s">
+                        <div class="icon">
+                            <img src="{% static 'img/svg_icon/1.svg' %}" alt="">
+                        </div>
+                        <h3>Body Mass Index</h3>
+                        <h4 style="font-size: 30px">{{ bmi }}</h4>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-6">
+                                <a href="{% url 'dailycalorie' %}"/>
+
+                    <div class="single_service text-center wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">
+                        <div class="icon">
+                            <img src="{% static 'img/svg_icon/2.svg' %}" alt="">
+                        </div>
+                        <h3>Daily Calorie</h3>
+                        <h4 style="font-size: 30px" >{{ dailycalorie }} calorie</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ service_area  -->
+
+{% else %}
+
+    {% if error %}
+        <br>
+        {{ error }}
+        <br>
+    {% endif  %}
+    <br>
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-3">
+                    <body class="text-center">
+
+
+                    </body>
+        </div>
+        </div>
+        </div>
+
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+        <body class="text-center">
+                <form  action="{% url 'calculatebmi' %}"  method="post" >
+                    {% csrf_token %}
+                    <table width="500">
+                        For Body Mass Index calculation please enter your information.
+                    {{form|crispy}}
+                 </table>
+                <input type="submit" value="Calculate!" class="boxed-btn3 wow fadeInLeft"  data-wow-duration="1s" data-wow-delay=".2s"/>
+                </form>
+                <div class="col-4"></div>
+</body>
+        </div>
+      </div>
+{% endif  %}
+
+<br>
+<br>
+<br>
+
+{% endblock %}
